@@ -87,7 +87,7 @@ nav {
 
 /* Hero Section */
 .hero {
-    background-image: url('hero_bg.png');
+    background-image: url('img/hero_bg.png');
     background-size: cover;
     background-position: center;
     padding: 100px 0;
