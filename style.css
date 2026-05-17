@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #ffe4ec;
+  color: #444;
+}
+
+/* ヘッダー */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: #ff8fb1;
+  color: white;
+}
+
+nav a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+/* ヒーロー */
+.hero {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  background: linear-gradient(#ffb6c1, #ffe4ec);
+}
+
+.hero img {
+  width: 300px;
+}
+
+.hero-text {
+  margin-left: 30px;
+}
+
+/* セクション */
+section {
+  padding: 40px;
+}
+
+/* ギャラリー */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.grid img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* フッター */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #ff8fb1;
+  color: white;
+}
