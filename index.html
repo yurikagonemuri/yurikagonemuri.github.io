@@ -1,72 +1,138 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>百合加護ねむり</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百合加護ねむり Official Website</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo_placeholder.png" alt="Nemu Logo" class="logo-img">
+                <span>百合加護ねむり</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#works">WORKS</a></li>
+                <li><a href="#gallery">GALLERY</a></li>
+                <li><a href="#movie">MOVIE</a></li>
+                <li><a href="#links">LINKS</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-twitch"></i></a>
+            </div>
+        </nav>
+    </header>
 
-<header>
-  <h1>百合加護ねむり</h1>
-  <nav>
-    <a href="#about">実績</a>
-    <a href="#gallery">イラスト</a>
-    <a href="#movie">動画</a>
-    <a href="#links">リンク</a>
-  </nav>
-</header>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-title">
+                    <span class="heart">♥</span> 百合加護ねむり <span class="heart">♥</span>
+                </div>
+                <div class="hero-subtitle">♥ VTUBER ♥</div>
+                <p class="hero-description">
+                    みんなの心に寄り添う天使ナースVライバー<br>
+                    夢をみんなと一緒に叶える！
+                </p>
+                <div class="hero-buttons">
+                    <a href="#about" class="btn btn-primary"><i class="fas fa-heart"></i> ABOUT ME</a>
+                    <a href="#contact" class="btn btn-secondary"><i class="far fa-envelope"></i> CONTACT</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="nemu_character_main.png" alt="Nemu Character">
+            </div>
+        </div>
+    </section>
 
-<!-- メイン -->
-<section class="hero">
-  <img src="img/main.png" alt="メイン">
-  <div class="hero-text">
-    <h2>VTuber / Vライバー</h2>
-    <p>エキセントリックメンヘライバー</p>
-  </div>
-</section>
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title">About / 実績一覧</h2>
+            <div class="about-grid">
+                <div class="history">
+                    <ul>
+                        <li><span class="heart">♥</span> <span class="date">2025.08.08</span> REALITY初配信</li>
+                        <li><span class="heart">♥</span> <span class="date">2025.08.08</span> 実績</li>
+                        <li><span class="heart">♥</span> <span class="date">2025.08.086</span> 実績</li>
+                        <li><span class="heart">♥</span> <span class="date">2025.08.08</span> 実績</li>
+                        <li><span class="heart">♥</span> <span class="date">2025.08.08</span> 実績</li>
+                    </ul>
+                    <a href="#" class="btn-more">もっと見る +</a>
+                </div>
+                <div class="about-video">
+                    <div class="video-placeholder">
+                        <img src="gallery_1.png" alt="About Video Thumbnail">
+                        <div class="play-button"><i class="fas fa-play-circle"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- 実績 -->
-<section id="about">
-  <h2>実績</h2>
-  <ul>
-    <li>2025/08/08 REALITY初配信</li>
-    <li>2025/08/08 </li>
-    <li>2025/08/08 </li>
-  </ul>
-</section>
+    <section id="gallery" class="section gallery">
+        <div class="container">
+            <h2 class="section-title">イラストギャラリー</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="gallery_1.png" alt="Gallery 1"></div>
+                <div class="gallery-item"><img src="gallery_2.png" alt="Gallery 2"></div>
+                <div class="gallery-item"><img src="gallery_3.png" alt="Gallery 3"></div>
+                <div class="gallery-item"><img src="gallery_4.png" alt="Gallery 4"></div>
+                <div class="gallery-item"><img src="gallery_5.png" alt="Gallery 5"></div>
+            </div>
+            <div class="text-center">
+                <a href="#" class="btn-more-pink">ギャラリーをもっと見る +</a>
+            </div>
+        </div>
+    </section>
 
-<!-- イラスト -->
-<section id="gallery">
-  <h2>イラスト</h2>
-  <div class="grid">
-    <img src="img/main.png">
-    <img src="img/main.png">
-    <img src="img/main.png">
-  </div>
-</section>
+    <section id="movie" class="section movie-links">
+        <div class="container">
+            <div class="movie-links-grid">
+                <div class="movie-section">
+                    <h2 class="section-title"><i class="fas fa-video"></i> 動画 / Movie</h2>
+                    <div class="video-main">
+                        <img src="gallery_5.png" alt="Main Video">
+                        <div class="play-button-large"><i class="fab fa-youtube"></i></div>
+                    </div>
+                    <a href="#" class="btn-movie-list">動画一覧へ</a>
+                </div>
+                <div class="links-section">
+                    <h2 class="section-title"><i class="fas fa-link"></i> リンク / Links</h2>
+                    <div class="links-grid">
+                        <a href="#" class="link-card"><i class="fab fa-youtube color-yt"></i> YouTube</a>
+                        <a href="#" class="link-card"><i class="fab fa-twitter color-tw"></i> Twitter</a>
+                        <a href="#" class="link-card"><i class="fab fa-twitch color-tc"></i> Twitch</a>
+                        <a href="#" class="link-card"><i class="fas fa-box color-fb"></i> FANBOX</a>
+                        <a href="#" class="link-card"><i class="fas fa-shopping-cart color-bt"></i> BOOTH</a>
+                        <a href="#" class="link-card"><i class="fas fa-comment color-mm"></i> マシュマロ</a>
+                        <a href="#" class="link-card"><i class="fab fa-tiktok color-tk"></i> TikTok</a>
+                        <a href="#" class="link-card"><i class="fas fa-list color-wl"></i> ほしいものリスト</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- 動画 -->
-<section id="movie">
-  <h2>動画</h2>
-  <iframe width="560" height="315"
-    src="https://www.youtube.com/embed/動画ID"
-    frameborder="0" allowfullscreen>
-  </iframe>
-</section>
-
-<!-- リンク -->
-<section id="links">
-  <h2>リンク</h2>
-  <a href="#">Twitter</a>
-  <a href="#">YouTube</a>
-  <a href="#">その他</a>
-</section>
-
-<footer>
-  <p>© YURIKAGONEMURI</p>
-</footer>
-
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Yurikago Nemuri</div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-twitch"></i></a>
+                <a href="#"><i class="far fa-envelope"></i></a>
+            </div>
+            <p class="copyright">© 2025 Yurikago Nemuri. All Rights Reserved.</p>
+        </div>
+        <a href="#home" class="back-to-top">↑ TOP</a>
+    </footer>
 </body>
 </html>
