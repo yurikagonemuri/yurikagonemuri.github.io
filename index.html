@@ -1,138 +1,679 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>百合加護ねむり Official Website</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VTuber Official Fan Site</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#ec4899', // ビビットピンク
+              hover: '#db2777',
+              dark: '#831843',
+              glow: 'rgba(236, 72, 153, 0.4)'
+            },
+            bgDark: '#0b0f19',
+            cardDark: '#161e2e'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* アニメーションと細部の調整 */
+    body {
+      background-color: #030712;
+      color: #f3f4f6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #374151;
+      border-radius: 4px;
+    }
+    /* アコーディオンアニメーション */
+    .accordion-content {
+      transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), opacity 0.2s ease-in-out;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+    .accordion-content.open {
+      max-height: 1000px;
+      opacity: 1;
+      transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">
-                <img src="img/logo_placeholder.png" alt="Nemu Logo" class="logo-img">
-                <span>百合加護ねむり</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#about">ABOUT</a></li>
-                <li><a href="#works">WORKS</a></li>
-                <li><a href="#gallery">GALLERY</a></li>
-                <li><a href="#movie">MOVIE</a></li>
-                <li><a href="#links">LINKS</a></li>
-                <li><a href="#contact">CONTACT</a></li>
-            </ul>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-twitch"></i></a>
-            </div>
-        </nav>
+<body class="flex justify-center min-h-screen">
+
+  <!-- モバイルコンテナ (max-w-md 中央寄せ) -->
+  <div class="w-full max-w-md bg-bgDark min-h-screen flex flex-col relative shadow-2xl border-x border-slate-800 pb-20">
+
+    <!-- ヘッダー (sticky top-0) -->
+    <header class="sticky top-0 z-30 bg-bgDark/90 backdrop-blur-md border-b border-slate-800 px-4 py-3 flex justify-between items-center">
+      <h1 id="header-title" class="text-lg font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-brand to-pink-300">
+        PROFILE
+      </h1>
+      <button id="admin-btn" onclick="openAdminPrompt()" class="w-9 h-9 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition border border-slate-700/50">
+        <i class="fa-solid fa-gear text-sm"></i>
+      </button>
     </header>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <div class="hero-title">
-                    <span class="heart">♥</span> 百合加護ねむり <span class="heart">♥</span>
-                </div>
-                <div class="hero-subtitle">♥ VTUBER ♥</div>
-                <p class="hero-description">
-                    みんなの心に寄り添う天使ナースVライバー<br>
-                    夢をみんなと一緒に叶える！
-                </p>
-                <div class="hero-buttons">
-                    <a href="#about" class="btn btn-primary"><i class="fas fa-heart"></i> ABOUT ME</a>
-                    <a href="#contact" class="btn btn-secondary"><i class="far fa-envelope"></i> CONTACT</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="img/nemu_character_main.png" alt="Nemu Character">
-            </div>
+    <!-- メインコンテンツエリア (SPA構造) -->
+    <main class="flex-1 p-4 overflow-y-auto custom-scroll">
+      
+      <!-- 1. ホーム画面 (PROFILE) -->
+      <section id="page-home" class="page-content space-y-6">
+        <!-- アバター & プロフィール基本情報 -->
+        <div class="flex flex-col items-center text-center space-y-3 pt-2">
+          <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-brand to-purple-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
+            <img id="view-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Avatar" class="relative w-28 h-28 rounded-full object-cover border-2 border-bgDark">
+          </div>
+          <div>
+            <h2 id="view-name" class="text-2xl font-black tracking-wide text-white">---</h2>
+            <p id="view-catchphrase" class="text-xs font-semibold text-brand tracking-widest mt-0.5">---</p>
+          </div>
         </div>
-    </section>
 
-    <section id="about" class="section about">
-        <div class="container">
-            <h2 class="section-title">About / 実績一覧</h2>
-            <div class="about-grid">
-                <div class="history">
-                    <ul>
-                        <li><span class="heart">♥</span> <span class="date">2025.08.08</span> REALITY初配信</li>
-                        <li><span class="heart">♥</span> <span class="date">2025.08.08</span> 実績</li>
-                        <li><span class="heart">♥</span> <span class="date">2025.08.086</span> 実績</li>
-                        <li><span class="heart">♥</span> <span class="date">2025.08.08</span> 実績</li>
-                        <li><span class="heart">♥</span> <span class="date">2025.08.08</span> 実績</li>
-                    </ul>
-                    <a href="#" class="btn-more">もっと見る +</a>
-                </div>
-                <div class="about-video">
-                    <div class="video-placeholder">
-                        <img src="img/gallery_1.png" alt="About Video Thumbnail">
-                        <div class="play-button"><i class="fas fa-play-circle"></i></div>
-                    </div>
-                </div>
-            </div>
+        <!-- 自己紹介カード -->
+        <div class="bg-cardDark p-4 rounded-xl border border-slate-800 shadow-lg">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-user-astronaut text-brand"></i> About Me
+          </h3>
+          <p id="view-bio" class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">---</p>
         </div>
-    </section>
 
-    <section id="gallery" class="section gallery">
-        <div class="container">
-            <h2 class="section-title">イラストギャラリー</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item"><img src="img/gallery_1.png" alt="Gallery 1"></div>
-                <div class="gallery-item"><img src="img/gallery_2.png" alt="Gallery 2"></div>
-                <div class="gallery-item"><img src="img/gallery_3.png" alt="Gallery 3"></div>
-                <div class="gallery-item"><img src="img/gallery_4.png" alt="Gallery 4"></div>
-                <div class="gallery-item"><img src="img/gallery_5.png" alt="Gallery 5"></div>
-            </div>
-            <div class="text-center">
-                <a href="#" class="btn-more-pink">ギャラリーをもっと見る +</a>
-            </div>
+        <!-- SNSリンク集 -->
+        <div class="space-y-2.5">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+            <i class="fa-solid fa-hashtag text-brand"></i> Official Links
+          </h3>
+          <div id="sns-links-container" class="grid grid-cols-1 gap-2.5">
+            <!-- JavaScriptで動的生成 -->
+          </div>
         </div>
-    </section>
+      </section>
 
-    <section id="movie" class="section movie-links">
-        <div class="container">
-            <div class="movie-links-grid">
-                <div class="movie-section">
-                    <h2 class="section-title"><i class="fas fa-video"></i> 動画 / Movie</h2>
-                    <div class="video-main">
-                        <img src="img/gallery_5.png" alt="Main Video">
-                        <div class="play-button-large"><i class="fab fa-youtube"></i></div>
-                    </div>
-                    <a href="#" class="btn-movie-list">動画一覧へ</a>
-                </div>
-                <div class="links-section">
-                    <h2 class="section-title"><i class="fas fa-link"></i> リンク / Links</h2>
-                    <div class="links-grid">
-                        <a href="#" class="link-card"><i class="fab fa-youtube color-yt"></i> YouTube</a>
-                        <a href="#" class="link-card"><i class="fab fa-twitter color-tw"></i> Twitter</a>
-                        <a href="#" class="link-card"><i class="fab fa-twitch color-tc"></i> Twitch</a>
-                        <a href="#" class="link-card"><i class="fas fa-box color-fb"></i> FANBOX</a>
-                        <a href="#" class="link-card"><i class="fas fa-shopping-cart color-bt"></i> BOOTH</a>
-                        <a href="#" class="link-card"><i class="fas fa-comment color-mm"></i> マシュマロ</a>
-                        <a href="#" class="link-card"><i class="fab fa-tiktok color-tk"></i> TikTok</a>
-                        <a href="#" class="link-card"><i class="fas fa-list color-wl"></i> ほしいものリスト</a>
-                    </div>
-                </div>
-            </div>
+      <!-- 2. おみくじ画面 (OMIKUJI) -->
+      <section id="page-omikuji" class="page-content hidden space-y-6 text-center py-4">
+        <div class="space-y-2">
+          <h2 class="text-xl font-bold text-white">本日の運勢おみくじ</h2>
+          <p class="text-xs text-slate-400">1日1回挑戦できます！今日のあなたの運勢は？</p>
         </div>
-    </section>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">Yurikago Nemuri</div>
-            <div class="footer-social">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-twitch"></i></a>
-                <a href="#"><i class="far fa-envelope"></i></a>
-            </div>
-            <p class="copyright">© 2025 Yurikago Nemuri. All Rights Reserved.</p>
+        <!-- おみくじ結果表示カード -->
+        <div id="omikuji-box" class="bg-cardDark border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col items-center justify-center min-h-[220px] transition duration-300">
+          <i id="omikuji-icon" class="fa-solid fa-gem text-5xl text-brand animate-bounce my-4"></i>
+          <div id="omikuji-result" class="hidden space-y-3">
+            <span id="omikuji-fortune" class="inline-block px-4 py-1.5 text-2xl font-black rounded-full bg-brand/20 text-brand border border-brand/40 shadow-lg shadow-brand/10">
+              --
+            </span>
+            <p id="omikuji-message" class="text-sm text-slate-200 mt-2 px-2 leading-relaxed">--</p>
+            <p id="omikuji-date" class="text-[10px] text-slate-500 mt-4"></p>
+          </div>
+          <p id="omikuji-placeholder" class="text-sm text-slate-400">ボタンを押しておみくじを引いてね！</p>
         </div>
-        <a href="#home" class="back-to-top">↑ TOP</a>
-    </footer>
+
+        <!-- アクションボタン -->
+        <button id="draw-omikuji-btn" onclick="drawOmikuji()" class="w-full py-3.5 px-6 rounded-xl font-bold text-white bg-gradient-to-r from-brand to-purple-600 hover:opacity-90 active:scale-95 transition shadow-lg shadow-brand/25 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> おみくじを引く
+        </button>
+      </section>
+
+      <!-- 3. スケジュール画面 (SCHEDULE) -->
+      <section id="page-schedule" class="page-content hidden space-y-4">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Weekly Schedule</h2>
+          <span class="text-xs text-slate-500">※変更される場合があります</span>
+        </div>
+        <div id="schedule-list" class="space-y-2.5">
+          <!-- JavaScriptで動的生成 -->
+        </div>
+      </section>
+
+      <!-- 4. 配信ルール画面 (RULES) -->
+      <section id="page-rules" class="page-content hidden space-y-4">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider">Streaming Guidelines</h2>
+          <span class="text-xs text-slate-500">ルールを守って楽しく視聴！</span>
+        </div>
+        <div id="rules-container" class="space-y-3">
+          <!-- JavaScriptで動的生成 (アコーディオン) -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ボトムナビゲーション (固定表示) -->
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-bgDark/95 backdrop-blur-md border-t border-slate-800 z-30 flex justify-around py-2">
+      <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center gap-1 text-brand">
+        <i class="fa-solid fa-house text-lg"></i>
+        <span class="text-[10px] font-medium">ホーム</span>
+      </button>
+      <button onclick="switchTab('omikuji')" id="nav-omikuji" class="nav-btn flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+        <i class="fa-solid fa-gem text-lg"></i>
+        <span class="text-[10px] font-medium">おみくじ</span>
+      </button>
+      <button onclick="switchTab('schedule')" id="nav-schedule" class="nav-btn flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+        <i class="fa-solid fa-calendar-days text-lg"></i>
+        <span class="text-[10px] font-medium">予定</span>
+      </button>
+      <button onclick="switchTab('rules')" id="nav-rules" class="nav-btn flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+        <i class="fa-solid fa-shield-halved text-lg"></i>
+        <span class="text-[10px] font-medium">ルール</span>
+      </button>
+    </nav>
+
+    <!-- 管理者モーダル -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-cardDark border border-slate-700 w-full max-w-sm rounded-2xl shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
+        
+        <!-- モーダルヘッダー -->
+        <div class="px-4 py-3 border-b border-slate-700 flex justify-between items-center bg-slate-900/50">
+          <h3 class="font-bold text-white text-sm flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-brand"></i> 管理者設定
+          </h3>
+          <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white p-1">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- モーダルタブナビゲーション -->
+        <div class="flex border-b border-slate-700 bg-slate-900/30 overflow-x-auto custom-scroll text-xs">
+          <button onclick="switchAdminTab('profile')" id="atab-profile" class="admin-tab-btn px-3 py-2.5 whitespace-nowrap border-b-2 border-brand text-brand font-bold">プロフ/SNS</button>
+          <button onclick="switchAdminTab('omikuji')" id="atab-omikuji" class="admin-tab-btn px-3 py-2.5 whitespace-nowrap border-b-2 border-transparent text-slate-400">おみくじ</button>
+          <button onclick="switchAdminTab('schedule')" id="atab-schedule" class="admin-tab-btn px-3 py-2.5 whitespace-nowrap border-b-2 border-transparent text-slate-400">予定</button>
+          <button onclick="switchAdminTab('rules')" id="atab-rules" class="admin-tab-btn px-3 py-2.5 whitespace-nowrap border-b-2 border-transparent text-slate-400">ルール</button>
+          <button onclick="switchAdminTab('settings')" id="atab-settings" class="admin-tab-btn px-3 py-2.5 whitespace-nowrap border-b-2 border-transparent text-slate-400">設定/データ</button>
+        </div>
+
+        <!-- モーダルボディ (タブコンテンツ) -->
+        <div class="p-4 overflow-y-auto custom-scroll flex-1 space-y-4 text-xs">
+
+          <!-- 管理者1: プロフ/SNS -->
+          <div id="apage-profile" class="admin-page space-y-3">
+            <div>
+              <label class="block text-slate-400 mb-1">名前</label>
+              <input type="text" id="edit-name" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:border-brand outline-none">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">キャッチコピー</label>
+              <input type="text" id="edit-catchphrase" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:border-brand outline-none">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">アバター画像URL</label>
+              <input type="text" id="edit-avatar" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:border-brand outline-none">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">自己紹介文</label>
+              <textarea id="edit-bio" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:border-brand outline-none"></textarea>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">SNSリンク設定 (JSON形式)</label>
+              <textarea id="edit-sns" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-[10px] text-slate-300 focus:border-brand outline-none"></textarea>
+            </div>
+          </div>
+
+          <!-- 管理者2: おみくじ設定 -->
+          <div id="apage-omikuji" class="admin-page hidden space-y-3">
+            <p class="text-[11px] text-slate-400 mb-2">確率(重み)とメッセージを編集できます。(JSON形式)</p>
+            <textarea id="edit-omikuji" rows="12" class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-[10px] text-slate-300 focus:border-brand outline-none"></textarea>
+          </div>
+
+          <!-- 管理者3: スケジュール設定 -->
+          <div id="apage-schedule" class="admin-page hidden space-y-3">
+            <p class="text-[11px] text-slate-400 mb-2">曜日ごとの配信予定 (JSON形式)</p>
+            <textarea id="edit-schedule" rows="12" class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-[10px] text-slate-300 focus:border-brand outline-none"></textarea>
+          </div>
+
+          <!-- 管理者4: ルール設定 -->
+          <div id="apage-rules" class="admin-page hidden space-y-3">
+            <p class="text-[11px] text-slate-400 mb-2">配信ガイドライン (JSON形式)</p>
+            <textarea id="edit-rules" rows="12" class="w-full bg-slate-900 border border-slate-700 rounded p-2 font-mono text-[10px] text-slate-300 focus:border-brand outline-none"></textarea>
+          </div>
+
+          <!-- 管理者5: データ/設定 -->
+          <div id="apage-settings" class="admin-page hidden space-y-4">
+            <div class="space-y-2 border-b border-slate-700 pb-3">
+              <label class="block text-slate-300 font-bold">パスワード変更</label>
+              <input type="password" id="edit-password" placeholder="新しいパスワード" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:border-brand outline-none">
+            </div>
+            <div class="space-y-2 border-b border-slate-700 pb-3">
+              <label class="block text-slate-300 font-bold">おみくじ試行履歴リセット</label>
+              <button onclick="resetOmikujiHistory()" class="w-full py-2 bg-amber-600/20 hover:bg-amber-600/30 text-amber-400 border border-amber-600/50 rounded font-bold transition">
+                本日の抽選フラグを消去
+              </button>
+            </div>
+            <div class="space-y-2 border-b border-slate-700 pb-3">
+              <label class="block text-slate-300 font-bold">バックアップ / 復元</label>
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="exportData()" class="py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded border border-slate-700 font-medium">エクスポート</button>
+                <button onclick="importDataPrompt()" class="py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded border border-slate-700 font-medium">インポート</button>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label class="block text-red-400 font-bold">危険ゾーン</label>
+              <button onclick="resetToDefault()" class="w-full py-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-600/50 rounded font-bold transition">
+                全設定を初期状態に戻す
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- モーダル保存フッター -->
+        <div class="p-3 border-t border-slate-700 bg-slate-900/50 flex justify-end gap-2">
+          <button onclick="closeAdminModal()" class="px-3 py-1.5 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 transition">キャンセル</button>
+          <button onclick="saveAdminSettings()" class="px-4 py-1.5 bg-brand hover:bg-brand-hover text-white font-bold rounded shadow transition flex items-center gap-1">
+            <i class="fa-solid fa-floppy-disk"></i> 保存
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // --- 初期データ定義 ---
+    const DEFAULT_DATA = {
+      password: "admin123",
+      profile: {
+        name: "桃色 ましろ",
+        catchphrase: "あなたの毎日に「きゅん」をお届け！",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+        bio: "バーチャル空間から配信中！ゲーム実況、雑談、歌ってみたを中心に活動しています✨\nみんなで楽しく居心地の良い空間を作っていこうね！"
+      },
+      sns: [
+        { label: "YouTube Channel", icon: "fa-brands fa-youtube", url: "#", color: "from-red-600 to-red-700" },
+        { label: "X (Twitter)", icon: "fa-brands fa-x-twitter", url: "#", color: "from-slate-700 to-slate-900" },
+        { label: "REALITY", icon: "fa-solid fa-headset", url: "#", color: "from-pink-500 to-rose-500" },
+        { label: "マシュマロ (質問箱)", icon: "fa-solid fa-box-archive", url: "#", color: "from-amber-500 to-orange-500" }
+      ],
+      omikuji: [
+        { fortune: "大吉", weight: 10, message: "最高の一日！配信でいいことが起きるかも✨" },
+        { fortune: "中吉", weight: 20, message: "ラッキーな日！推し活が捗りそう！" },
+        { fortune: "小吉", weight: 25, message: "穏やかで良い日。あたたかい飲み物を飲もう🍵" },
+        { fortune: "吉", weight: 25, message: "ふつうが一番！いつも通りの一日を楽しんでね。" },
+        { fortune: "末吉", weight: 15, message: "のんびり過ごすのが吉。焦らずいこう！" },
+        { fortune: "凶", weight: 5, message: "ちょっと注意？ましろの配信を見て元気を出そう！" }
+      ],
+      schedule: [
+        { day: "月", time: "21:00 ~", title: "定期雑談配信 🗣️", off: false },
+        { day: "火", time: "-", title: "お休み", off: true },
+        { day: "水", time: "20:00 ~", title: "新作RPG実況 🎮", off: false },
+        { day: "木", time: "22:00 ~", title: "歌枠・リクエスト歓迎 🎤", off: false },
+        { day: "金", time: "-", title: "お休み", off: true },
+        { day: "土", time: "21:00 ~", title: "参加型ゲーム企画 🏆", off: false },
+        { day: "日", time: "19:00 ~", title: "振り返り & 雑談 ☕", off: false }
+      ],
+      rules: [
+        { title: "コメントについての注意事項", content: "リスナー同士の喧嘩や、過度な下ネタ・攻撃的な発言はお控えください。みんなが楽しく過ごせるようご協力をお願いします。" },
+        { title: "ネタバレ・伝書鳩行為の禁止", content: "配信者が求めていない指示やネタバレ、他の配信者様の枠で「ましろ」の名前を無闇に出す行為（伝書鳩）は禁止です。" },
+        { title: "切り抜き動画・ファンアート", content: "ガイドラインを守っていただければ大歓迎です！ガイドライン詳細はSNSの固定ポストをご確認ください。" }
+      ]
+    };
+
+    // アプリケーション状態管理
+    let appData = {};
+
+    // --- 初期化 ---
+    function init() {
+      loadData();
+      renderAll();
+      checkOmikujiStatus();
+    }
+
+    // LocalStorageからデータ読み込み
+    function loadData() {
+      const stored = localStorage.getItem('vtuber_app_data');
+      if (stored) {
+        try {
+          appData = JSON.parse(stored);
+        } catch (e) {
+          appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        }
+      } else {
+        appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        saveData();
+      }
+    }
+
+    // LocalStorageへ保存
+    function saveData() {
+      localStorage.setItem('vtuber_app_data', JSON.stringify(appData));
+    }
+
+    // --- 画面レンダリング系 ---
+    function renderAll() {
+      renderProfile();
+      renderSNS();
+      renderSchedule();
+      renderRules();
+    }
+
+    function renderProfile() {
+      document.getElementById('view-name').textContent = appData.profile.name;
+      document.getElementById('view-catchphrase').textContent = appData.profile.catchphrase;
+      document.getElementById('view-avatar').src = appData.profile.avatar;
+      document.getElementById('view-bio').textContent = appData.profile.bio;
+    }
+
+    function renderSNS() {
+      const container = document.getElementById('sns-links-container');
+      container.innerHTML = '';
+      appData.sns.forEach(sns => {
+        const a = document.createElement('a');
+        a.href = sns.url;
+        a.target = "_blank";
+        a.className = `flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r ${sns.color} text-white font-bold shadow-md hover:opacity-90 active:scale-[0.98] transition`;
+        a.innerHTML = `
+          <div class="flex items-center gap-3">
+            <i class="${sns.icon} text-lg w-5 text-center"></i>
+            <span class="text-xs tracking-wide">${sns.label}</span>
+          </div>
+          <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
+        `;
+        container.appendChild(a);
+      });
+    }
+
+    function renderSchedule() {
+      const container = document.getElementById('schedule-list');
+      container.innerHTML = '';
+      appData.schedule.forEach(item => {
+        const div = document.createElement('div');
+        if (item.off) {
+          div.className = "flex items-center justify-between p-3 rounded-xl bg-slate-900/40 border border-slate-800/40 text-slate-500 opacity-60";
+          div.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="w-7 h-7 rounded-lg bg-slate-800/50 flex items-center justify-center font-bold text-xs">${item.day}</span>
+              <span class="text-xs font-medium">${item.title}</span>
+            </div>
+            <span class="text-[10px] uppercase font-bold tracking-wider">Off</span>
+          `;
+        } else {
+          div.className = "flex items-center justify-between p-3 rounded-xl bg-cardDark border border-slate-800 shadow-sm text-slate-200";
+          div.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="w-7 h-7 rounded-lg bg-brand/20 text-brand border border-brand/30 flex items-center justify-center font-bold text-xs">${item.day}</span>
+              <span class="text-xs font-bold">${item.title}</span>
+            </div>
+            <span class="text-xs font-mono text-brand font-semibold">${item.time}</span>
+          `;
+        }
+        container.appendChild(div);
+      });
+    }
+
+    function renderRules() {
+      const container = document.getElementById('rules-container');
+      container.innerHTML = '';
+      appData.rules.forEach((rule, index) => {
+        const card = document.createElement('div');
+        card.className = "bg-cardDark border border-slate-800 rounded-xl overflow-hidden shadow-sm";
+        card.innerHTML = `
+          <button onclick="toggleAccordion(${index})" class="w-full p-3.5 flex justify-between items-center text-left hover:bg-slate-800/30 transition">
+            <span class="text-xs font-bold text-slate-200 flex items-center gap-2">
+              <i class="fa-solid fa-circle-info text-brand text-xs"></i> ${rule.title}
+            </span>
+            <i id="rule-icon-${index}" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-300"></i>
+          </button>
+          <div id="rule-content-${index}" class="accordion-content px-3.5 bg-slate-900/50">
+            <p class="py-3 text-xs text-slate-300 leading-relaxed border-t border-slate-800/50">${rule.content}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // アコーディオン開閉
+    function toggleAccordion(index) {
+      const content = document.getElementById(`rule-content-${index}`);
+      const icon = document.getElementById(`rule-icon-${index}`);
+      
+      const isOpen = content.classList.contains('open');
+      
+      // 他を閉じる処理（シンプル化のため全閉じしてからトグル）
+      document.querySelectorAll('.accordion-content').forEach(el => el.classList.remove('open'));
+      document.querySelectorAll('[id^="rule-icon-"]').forEach(el => el.style.transform = 'rotate(0deg)');
+
+      if (!isOpen) {
+        content.classList.add('open');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // --- SPA ナビゲーション切り替え ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.page-content').forEach(page => page.classList.add('hidden'));
+      document.getElementById(`page-${tabId}`).classList.remove('hidden');
+
+      // ナビゲーションアイコンの色変更
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-brand');
+        btn.classList.add('text-slate-400');
+      });
+      document.getElementById(`nav-${tabId}`).classList.remove('text-slate-400');
+      document.getElementById(`nav-${tabId}`).classList.add('text-brand');
+
+      // ヘッダータイトルの更新
+      const titles = { home: 'PROFILE', omikuji: 'OMIKUJI', schedule: 'SCHEDULE', rules: 'RULES' };
+      document.getElementById('header-title').textContent = titles[tabId];
+
+      window.scrollTo(0, 0);
+    }
+
+    // --- おみくじ機能 (日本時間対応 & 重み付き抽選) ---
+    function getJSTDateString() {
+      const now = new Date();
+      // JST変換 (UTC+9)
+      const jst = new Date(now.getTime() + (now.getTimezoneOffset() + 9 * 60) * 60000);
+      return `${jst.getFullYear()}-${String(jst.getMonth() + 1).padStart(2, '0')}-${String(jst.getDate()).padStart(2, '0')}`;
+    }
+
+    function checkOmikujiStatus() {
+      const today = getJSTDateString();
+      const lastDraw = localStorage.getItem('omikuji_last_date');
+      const savedResult = localStorage.getItem('omikuji_last_result');
+
+      if (lastDraw === today && savedResult) {
+        // 本日すでに引き済み
+        const result = JSON.parse(savedResult);
+        displayOmikujiResult(result, today, true);
+      } else {
+        // まだ引いていない
+        resetOmikujiUI();
+      }
+    }
+
+    function resetOmikujiUI() {
+      document.getElementById('omikuji-icon').className = "fa-solid fa-gem text-5xl text-brand animate-bounce my-4";
+      document.getElementById('omikuji-result').classList.add('hidden');
+      document.getElementById('omikuji-placeholder').classList.remove('hidden');
+      
+      const btn = document.getElementById('draw-omikuji-btn');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> おみくじを引く';
+      btn.className = "w-full py-3.5 px-6 rounded-xl font-bold text-white bg-gradient-to-r from-brand to-purple-600 hover:opacity-90 active:scale-95 transition shadow-lg shadow-brand/25 flex items-center justify-center gap-2";
+    }
+
+    function drawOmikuji() {
+      const today = getJSTDateString();
+      
+      // 重み付き抽選ロジック
+      const list = appData.omikuji;
+      const totalWeight = list.reduce((acc, item) => acc + Number(item.weight || 0), 0);
+      let random = Math.random() * totalWeight;
+      let selected = list[0];
+
+      for (let item of list) {
+        if (random < item.weight) {
+          selected = item;
+          break;
+        }
+        random -= item.weight;
+      }
+
+      // 保存
+      localStorage.setItem('omikuji_last_date', today);
+      localStorage.setItem('omikuji_last_result', JSON.stringify(selected));
+
+      displayOmikujiResult(selected, today, false);
+    }
+
+    function displayOmikujiResult(result, dateStr, isAlreadyDrawn) {
+      document.getElementById('omikuji-placeholder').classList.add('hidden');
+      document.getElementById('omikuji-icon').className = "fa-solid fa-sparkles text-4xl text-amber-400 mb-2";
+      
+      const resultDiv = document.getElementById('omikuji-result');
+      document.getElementById('omikuji-fortune').textContent = result.fortune;
+      document.getElementById('omikuji-message').textContent = result.message;
+      document.getElementById('omikuji-date').textContent = `抽選日: ${dateStr}`;
+      resultDiv.classList.remove('hidden');
+
+      const btn = document.getElementById('draw-omikuji-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> 本日は引き終わりました';
+      btn.className = "w-full py-3.5 px-6 rounded-xl font-bold text-slate-400 bg-slate-800 border border-slate-700 cursor-not-allowed flex items-center justify-center gap-2";
+    }
+
+    // --- 管理者モーダル機能 ---
+    function openAdminPrompt() {
+      const pwd = prompt("管理者パスワードを入力してください:");
+      if (pwd === null) return;
+      if (pwd === appData.password) {
+        openAdminModal();
+      } else {
+        alert("パスワードが違います。");
+      }
+    }
+
+    function openAdminModal() {
+      // フォームに現在の設定値を読み込み
+      document.getElementById('edit-name').value = appData.profile.name;
+      document.getElementById('edit-catchphrase').value = appData.profile.catchphrase;
+      document.getElementById('edit-avatar').value = appData.profile.avatar;
+      document.getElementById('edit-bio').value = appData.profile.bio;
+      document.getElementById('edit-sns').value = JSON.stringify(appData.sns, null, 2);
+      document.getElementById('edit-omikuji').value = JSON.stringify(appData.omikuji, null, 2);
+      document.getElementById('edit-schedule').value = JSON.stringify(appData.schedule, null, 2);
+      document.getElementById('edit-rules').value = JSON.stringify(appData.rules, null, 2);
+      document.getElementById('edit-password').value = "";
+
+      switchAdminTab('profile');
+      document.getElementById('admin-modal').classList.remove('hidden');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.add('hidden');
+    }
+
+    function switchAdminTab(tabName) {
+      document.querySelectorAll('.admin-page').forEach(page => page.classList.add('hidden'));
+      document.getElementById(`apage-${tabName}`).classList.remove('hidden');
+
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.classList.remove('border-brand', 'text-brand', 'font-bold');
+        btn.classList.add('border-transparent', 'text-slate-400');
+      });
+      const activeBtn = document.getElementById(`atab-${tabName}`);
+      activeBtn.classList.remove('border-transparent', 'text-slate-400');
+      activeBtn.classList.add('border-brand', 'text-brand', 'font-bold');
+    }
+
+    function saveAdminSettings() {
+      try {
+        // テキスト入力の反映
+        appData.profile.name = document.getElementById('edit-name').value;
+        appData.profile.catchphrase = document.getElementById('edit-catchphrase').value;
+        appData.profile.avatar = document.getElementById('edit-avatar').value;
+        appData.profile.bio = document.getElementById('edit-bio').value;
+
+        // JSONバリデーションと反映
+        appData.sns = JSON.parse(document.getElementById('edit-sns').value);
+        appData.omikuji = JSON.parse(document.getElementById('edit-omikuji').value);
+        appData.schedule = JSON.parse(document.getElementById('edit-schedule').value);
+        appData.rules = JSON.parse(document.getElementById('edit-rules').value);
+
+        // パスワード変更
+        const newPwd = document.getElementById('edit-password').value.trim();
+        if (newPwd) {
+          appData.password = newPwd;
+        }
+
+        saveData();
+        renderAll();
+        closeAdminModal();
+        alert("設定を保存し即座に反映しました！");
+      } catch (e) {
+        alert("JSONの構文にエラーがあります。入力形式をご確認ください。\n\n詳細: " + e.message);
+      }
+    }
+
+    // データ設定機能
+    function resetOmikujiHistory() {
+      if (confirm("本日のおみくじ抽選履歴を消去し、再度引けるようにしますか？")) {
+        localStorage.removeItem('omikuji_last_date');
+        localStorage.removeItem('omikuji_last_result');
+        resetOmikujiUI();
+        alert("おみくじの試行履歴をリセットしました。");
+      }
+    }
+
+    function exportData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `vtuber_site_data_${getJSTDateString()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function importDataPrompt() {
+      const jsonText = prompt("バックアップしたJSONデータを貼り付けてください:");
+      if (!jsonText) return;
+      try {
+        const parsed = JSON.parse(jsonText);
+        if (parsed.profile && parsed.omikuji && parsed.schedule) {
+          appData = parsed;
+          saveData();
+          renderAll();
+          closeAdminModal();
+          alert("データを復元しました！");
+        } else {
+          alert("データ形式が正しくありません。");
+        }
+      } catch (e) {
+        alert("JSON解析エラー: 正しいフォーマットではありません。");
+      }
+    }
+
+    function resetToDefault() {
+      if (confirm("全設定を初期状態にリセットします。本当によろしいですか？")) {
+        appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+        saveData();
+        renderAll();
+        resetOmikujiHistory();
+        closeAdminModal();
+        alert("初期状態にリセットしました。");
+      }
+    }
+
+    // アプリ起動
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
 </body>
 </html>
